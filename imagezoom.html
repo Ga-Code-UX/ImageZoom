@@ -1,0 +1,73 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+    
+<style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: whitesmoke;
+    }
+    
+    .image {
+      position: relative;
+      width: 40rem;
+      height: 25rem;
+      overflow: hidden;
+      border: 1px solid #fff;
+    }
+    .image:hover {
+      --zoom: 3;
+    }
+    .image img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -o-object-fit: cover;
+        object-fit: cover;
+      transform: scale(var(--zoom, 1));
+      transform-origin: var(--x) var(--y);
+      transition: transform 0.3s ease;
+    }
+</style>
+</head>
+<body>
+        
+    <div class="image">
+            <img src="img/alfa-romeo.jpg">
+    </div>
+    
+    <script>
+    let div = document.querySelectorAll('.image');
+    div.forEach(executeZoom);
+    
+    function executeZoom(elem){
+        let x, y, width, height;
+        //onmouseenter event occurs when the mouse pointer is moved onto an element
+        //getBoundingClientRect() method returns the size of an element and its position relative to the viewport
+        elem.addEventListener("mouseenter",function(){
+        const size = elem.getBoundingClientRect();
+        x = size.x;
+        y = size.y;
+        width = size.width;
+        height = size.height;
+        console.log(x,y)
+        });
+        //onmousemove event occurs when the pointer is moving while it is over an element
+        elem.addEventListener("mousemove",function(e){
+        const horizontal = (e.clientX - x) / width * 100;
+        const vertical = (e.clientY - y) / height * 100;
+    
+        elem.style.setProperty('--x', horizontal + '%');
+        elem.style.setProperty('--y', vertical + '%');
+        });
+    }
+        </script>
+    </body>
+    </html>
